@@ -987,71 +987,80 @@ function clearAllData() {
   }
 }
 
-// ============================================================
-// IMAGE UPLOAD TO IMGBB (Public Online Hosting)
-// ============================================================
-// imgbb free API key - images are publicly accessible by anyone
-const IMGBB_API_KEY = '3a9d29e82af24a65095a5daae3c87de2';
+// ─────────────────────────────────────────────────────────
+// CLOUD IMAGE UPLOAD — imgbb.com (free, no account needed)
+// Upload করলে permanent public HTTPS URL পাওয়া যায়
+// যা সব device / browser-এ দেখা যায়।
+// ─────────────────────────────────────────────────────────
+const IMGBB_KEY = 'a1b935ce4b64ef58eb3ac9d5b0e4e6e0';
 
-async function uploadToImgbb(base64Data) {
-  // Strip the data:image/...;base64, prefix if present
-  const base64 = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
+async function uploadToCloud(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('File read failed'));
+    reader.onload = async (e) => {
+      try {
+        // Strip the data:...;base64, prefix
+        const base64 = e.target.result.split(',')[1];
+        const fd = new FormData();
+        fd.append('key', IMGBB_KEY);
+        fd.append('image', base64);
 
-  const formData = new FormData();
-  formData.append('key', IMGBB_API_KEY);
-  formData.append('image', base64);
-
-  const response = await fetch('https://api.imgbb.com/1/upload', {
-    method: 'POST',
-    body: formData
+        const res = await fetch('https://api.imgbb.com/1/upload', {
+          method: 'POST',
+          body: fd
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.error?.message || 'Upload failed');
+        resolve(data.data.url);   // permanent public URL
+      } catch (err) {
+        reject(err);
+      }
+    };
+    reader.readAsDataURL(file);
   });
-
-  if (!response.ok) throw new Error('Upload failed: ' + response.status);
-  const data = await response.json();
-  if (!data.success) throw new Error('imgbb error: ' + (data.error && data.error.message));
-  return data.data.url; // permanent public URL
 }
 
-// Profile Photo Functions
+// ── Profile Photo ──────────────────────────
 function handlePhotoUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  // Show uploading state
-  const uploadBtn = document.querySelector('[onclick="document.getElementById(\'photoUpload\').click()"]');
-  if (uploadBtn) { uploadBtn.disabled = true; uploadBtn.textContent = '⏳ Uploading...'; }
-  showToast('Uploading photo to cloud... please wait.', 'success');
+  // Show uploading feedback
+  const btn = document.querySelector('.upload-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Uploading…'; }
+  showToast('📤 Photo cloud-এ upload হচ্ছে… একটু অপেক্ষা করুন।');
 
-  const reader = new FileReader();
-  reader.onload = async function(e) {
-    try {
-      const publicUrl = await uploadToImgbb(e.target.result);
-      siteData.hero.photo = publicUrl;
-      document.getElementById('editPhotoUrl').value = publicUrl;
-      showPhotoPreview(publicUrl);
+  uploadToCloud(file)
+    .then(url => {
+      siteData.hero.photo = url;
+      document.getElementById('editPhotoUrl').value = url;
+      showPhotoPreview(url);
       localStorage.setItem('portfolioData', JSON.stringify(siteData));
       renderContent();
-      showToast('✅ Photo uploaded! Now visible to everyone online.');
-    } catch (err) {
+      showToast('✅ Photo upload সফল! সব device-এ দেখা যাবে।');
+    })
+    .catch(err => {
       console.error(err);
-      // Fallback: store base64 locally with a warning
-      siteData.hero.photo = e.target.result;
-      document.getElementById('editPhotoUrl').value = '(local - only visible on this device)';
-      showPhotoPreview(e.target.result);
-      localStorage.setItem('portfolioData', JSON.stringify(siteData));
-      showToast('⚠️ Cloud upload failed. Photo saved locally only.', 'error');
-    } finally {
-      if (uploadBtn) { uploadBtn.disabled = false; uploadBtn.textContent = '📷 Upload Photo'; }
-    }
-  };
-  reader.readAsDataURL(file);
+      // Fallback – read as base64 locally (only visible on this browser)
+      const reader = new FileReader();
+      reader.onload = e => {
+        siteData.hero.photo = e.target.result;
+        document.getElementById('editPhotoUrl').value = '(local only)';
+        showPhotoPreview(e.target.result);
+        localStorage.setItem('portfolioData', JSON.stringify(siteData));
+        showToast('⚠️ Cloud upload ব্যর্থ। Photo শুধু এই browser-এ দেখা যাবে।', 'error');
+      };
+      reader.readAsDataURL(file);
+    })
+    .finally(() => {
+      if (btn) { btn.disabled = false; btn.textContent = '📷 Upload Photo'; }
+      event.target.value = '';   // reset file input
+    });
 }
 
 function updateProfilePhoto(url) {
-  if (url && url.match(/^https?:\/\//i)) {
-    siteData.hero.photo = url;
-    showPhotoPreview(url);
-  } else if (url.startsWith('data:image') || url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+  if (url && (url.startsWith('http') || url.match(/\.(jpeg|jpg|gif|png|webp|svg)$/i))) {
     siteData.hero.photo = url;
     showPhotoPreview(url);
   }
@@ -1166,30 +1175,33 @@ function renderSocialLogos() {
   `;
 }
 
+// ── Social Logo Upload ─────────────────────
 function uploadSocialLogo(siteKey, event) {
   const file = event.target.files[0];
   if (!file) return;
 
-  showToast('Uploading logo to cloud... please wait.', 'success');
+  showToast('📤 Logo cloud-এ upload হচ্ছে…');
 
-  const reader = new FileReader();
-  reader.onload = async function(e) {
-    try {
-      const publicUrl = await uploadToImgbb(e.target.result);
+  uploadToCloud(file)
+    .then(url => {
       if (!siteData.socialLogos) siteData.socialLogos = {};
-      siteData.socialLogos[siteKey] = publicUrl;
+      siteData.socialLogos[siteKey] = url;
       renderSocialLogos();
-      showToast('✅ Logo uploaded! Now visible to everyone online.');
-    } catch (err) {
+      showToast('✅ Logo upload সফল! সব device-এ দেখা যাবে।');
+    })
+    .catch(err => {
       console.error(err);
-      // Fallback: store base64 locally
-      if (!siteData.socialLogos) siteData.socialLogos = {};
-      siteData.socialLogos[siteKey] = e.target.result;
-      renderSocialLogos();
-      showToast('⚠️ Cloud upload failed. Logo saved locally only.', 'error');
-    }
-  };
-  reader.readAsDataURL(file);
+      // Fallback – base64
+      const reader = new FileReader();
+      reader.onload = e => {
+        if (!siteData.socialLogos) siteData.socialLogos = {};
+        siteData.socialLogos[siteKey] = e.target.result;
+        renderSocialLogos();
+        showToast('⚠️ Cloud upload ব্যর্থ। Logo শুধু এই browser-এ দেখা যাবে।', 'error');
+      };
+      reader.readAsDataURL(file);
+    })
+    .finally(() => { event.target.value = ''; });
 }
 
 function removeSocialLogo(siteKey) {
