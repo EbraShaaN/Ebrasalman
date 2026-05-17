@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Ebra SalmaN - Software Engineer & Full Stack Developer specializing in modern web technologies, clean code, and innovative solutions.">
+  <meta name="keywords" content="Software Engineer, Developer, Full Stack, Web Developer, Portfolio, Programming">
+  <meta name="author" content="Ebra SalmaN">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ebra SalmaN | Software Engineer & Developer">
+  <meta property="og:description" content="Full Stack Developer specializing in modern web technologies.">
+  <meta property="og:image" content="preview.png">
+  <meta property="og:url" content="https://ebrasalman.com">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ebra SalmaN | Software Engineer & Developer">
+  <meta name="twitter:description" content="Full Stack Developer specializing in modern web technologies.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ebrasalman.com">
+
+  <!-- Theme Color for Mobile Browsers -->
+  <meta name="theme-color" content="#0f0f0f">
+  <meta name="msapplication-navbutton-color" content="#0f0f0f">
+
+  <title>Ebra SalmaN | Software Engineer & Developer</title>
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Particles Background -->
+  <div id="particles"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo-container">
+      <div class="logo-img" id="navLogo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <div class="logo-text" id="navLogoText">Ebra Salman</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="admin-nav-btn" id="adminNavBtn" onclick="openLogin()">Admin</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home">
+    <div class="hero-content">
+      <div class="hero-top">
+        <div class="hero-logo" id="heroLogo">E</div>
+      </div>
+      <h1 class="glitch-text" id="heroName" data-text="EBRA SALMAN">EBRA SALMAN</h1>
+      <p class="hero-subtitle" id="heroTitle">Software Engineer | Developer | Programmer</p>
+      <p class="typing-text" id="heroTagline">Building the future, one line of code at a time...</p>
+      <p class="hero-description" id="heroDesc">Passionate software engineer with expertise in building scalable applications, crafting elegant solutions, and bringing innovative ideas to life through code.</p>
+      <div class="cta-buttons">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-secondary">Contact Me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title fade-in"><span>About</span> Me</h2>
+    <div class="about-content">
+      <div class="about-text fade-in slide-left" id="aboutText">
+        <p>I'm a dedicated software engineer with a passion for creating efficient, user-friendly, and innovative solutions.</p>
+      </div>
+      <div class="about-stats fade-in slide-right">
+        <div class="stat-card">
+          <div class="stat-number" id="statExp">3+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statProjects">20+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statTech">10+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="statSatisfaction">100%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2 class="section-title fade-in">Technical <span>Skills</span></h2>
+    <div class="skills-grid" id="skillsGrid">
+      <!-- Skills will be rendered by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2 class="section-title fade-in">Featured <span>Projects</span></h2>
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Projects will be rendered by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience">
+    <h2 class="section-title fade-in">Work <span>Experience</span></h2>
+    <div class="timeline" id="timeline">
+      <!-- Experience will be rendered by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title fade-in">Get In <span>Touch</span></h2>
+    <div class="contact-content">
+      <p id="contactText">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's create something amazing together.</p>
+      <div class="contact-container">
+        <div class="contact-left">
+          <h3 class="contact-heading">Let's Connect</h3>
+          <p class="contact-subtitle">Follow me on social platforms or reach out via email</p>
+          <div class="social-links" id="socialLinks">
+            <!-- Social links will be rendered by JavaScript -->
+          </div>
+        </div>
+
+        <div class="contact-right">
+          <h3>Send a Message</h3>
+          <form class="contact-form" id="contactForm" onsubmit="submitMessage(event)">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" class="form-input" id="msgName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" class="form-input" id="msgEmail" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea class="form-textarea" id="msgContent" placeholder="Write your message here..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Designed & Built by <span id="footerName">Ebra Salman</span> | &copy; 2025</p>
+  </footer>
+
+  <!-- Admin Toggle Button -->
+  <div class="admin-toggle hidden" id="adminToggle" onclick="openLogin()">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+  </div>
+
+  <!-- Admin Overlay -->
+  <div class="admin-overlay" onclick="toggleAdmin()"></div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel">
+    <div class="admin-header">
+      <h2>&#x2699; Admin Panel</h2>
+      <div class="admin-header-actions">
+        <button class="lock-btn" id="lockBtn" onclick="toggleLock()">&#x1F512;</button>
+        <button class="admin-close" onclick="toggleAdmin()">&#x2715;</button>
+      </div>
+    </div>
+
+    <!-- Admin Notification Area -->
+    <div class="admin-notification" id="adminNotification"></div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</button>
+      <button class="admin-tab" onclick="showAdminTab('hero')">Hero</button>
+      <button class="admin-tab" onclick="showAdminTab('about')">About</button>
+      <button class="admin-tab" onclick="showAdminTab('skills')">Skills</button>
+      <button class="admin-tab" onclick="showAdminTab('projects')">Projects</button>
+      <button class="admin-tab" onclick="showAdminTab('experience')">Experience</button>
+      <button class="admin-tab" onclick="showAdminTab('contact')">Contact</button>
+      <button class="admin-tab tab-with-badge" onclick="showAdminTab('messages')">
+        Messages <span class="message-badge" id="msgBadge" style="display: none;">0</span>
+      </button>
+    </div>
+
+    <div class="admin-content">
+      <!-- Dashboard Section -->
+      <div class="admin-section active" id="admin-dashboard">
+        <div class="admin-dashboard-grid">
+          <div class="admin-stat-card">
+            <div class="stat-icon">&#x1F4C8;</div>
+            <div class="stat-value" id="dashVisits">1,247</div>
+            <div class="stat-label">Total Visits</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="stat-icon">&#x1F4C8;</div>
+            <div class="stat-value" id="dashGrowth">89%</div>
+            <div class="stat-label">Growth</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="stat-icon">&#x1F4BB;</div>
+            <div class="stat-value" id="dashProjects">24</div>
+            <div class="stat-label">Projects</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="stat-icon">&#x1F4AC;</div>
+            <div class="stat-value" id="dashMessages">0</div>
+            <div class="stat-label">Messages</div>
+          </div>
+        </div>
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4CA; Quick Stats</h3>
+          <div class="edit-field">
+            <label>Total Visits</label>
+            <input type="text" class="edit-input" id="dashVisits2" value="1,247">
+          </div>
+          <div class="edit-field">
+            <label>Growth %</label>
+            <input type="text" class="edit-input" id="dashGrowth2" value="89%">
+          </div>
+          <div class="edit-field">
+            <label>Projects Count</label>
+            <input type="text" class="edit-input" id="dashProjects2" value="24">
+          </div>
+          <button class="save-btn" onclick="saveStats()">Save Stats</button>
+        </div>
+        <button class="logout-btn" onclick="logout()">&#x1F6AA; Logout</button>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="admin-section" id="admin-hero">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F464; Hero Section</h3>
+          <div class="edit-field">
+            <label>Profile Photo URL</label>
+            <div class="photo-upload-container">
+              <input type="text" class="edit-input" id="editPhotoUrl" placeholder="Enter image URL or upload">
+              <input type="file" id="photoUpload" accept="image/*" onchange="handlePhotoUpload(event)" style="display: none;">
+              <button class="upload-btn" onclick="document.getElementById('photoUpload').click()">&#x1F4F7; Upload</button>
+            </div>
+            <div class="photo-preview" id="photoPreview" style="display: none;">
+              <img id="photoPreviewImg" src="" alt="Preview">
+              <button class="remove-photo" onclick="removeProfilePhoto()">&#x2715;</button>
+            </div>
+          </div>
+          <div class="edit-field">
+            <label>Logo Letter</label>
+            <input type="text" class="edit-input" id="editLogo" value="E">
+          </div>
+          <div class="edit-field">
+            <label>Name</label>
+            <input type="text" class="edit-input" id="editName" value="EBRA SALMAN">
+          </div>
+          <div class="edit-field">
+            <label>Title</label>
+            <input type="text" class="edit-input" id="editTitle" value="Software Engineer | Developer | Programmer">
+          </div>
+          <div class="edit-field">
+            <label>Tagline</label>
+            <input type="text" class="edit-input" id="editTagline" value="Building the future, one line of code at a time...">
+          </div>
+          <div class="edit-field">
+            <label>Description</label>
+            <textarea class="edit-textarea" id="editDesc">Passionate software engineer with expertise in building scalable applications, crafting elegant solutions, and bringing innovative ideas to life through code.</textarea>
+          </div>
+          <button class="save-btn" onclick="saveHero()">&#x1F4BE; Save Hero</button>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="admin-section" id="admin-about">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F464; About Section</h3>
+          <div class="edit-field">
+            <label>About Text (use | for new paragraphs)</label>
+            <textarea class="edit-textarea" id="editAbout" style="min-height: 150px;">I'm a dedicated software engineer with a passion for creating efficient, user-friendly, and innovative solutions. With a strong foundation in multiple programming languages and modern development practices, I specialize in building robust applications that solve real-world problems.|My journey in technology is driven by curiosity and a constant desire to learn. I believe in writing clean, maintainable code and following best practices to deliver high-quality software products.</textarea>
+          </div>
+          <h4 style="color: #00f0ff; margin: 20px 0 10px;">Stats</h4>
+          <div class="edit-field">
+            <label>Experience</label>
+            <input type="text" class="edit-input" id="editStatExp" value="3+">
+          </div>
+          <div class="edit-field">
+            <label>Projects</label>
+            <input type="text" class="edit-input" id="editStatProjects" value="20+">
+          </div>
+          <div class="edit-field">
+            <label>Technologies</label>
+            <input type="text" class="edit-input" id="editStatTech" value="10+">
+          </div>
+          <div class="edit-field">
+            <label>Satisfaction</label>
+            <input type="text" class="edit-input" id="editStatSatisfaction" value="100%">
+          </div>
+          <button class="save-btn" onclick="saveAbout()">&#x1F4BE; Save About</button>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="admin-section" id="admin-skills">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4BB; Skills
+            <div style="display: inline-flex; gap: 8px; float: right;">
+              <button class="view-btn" onclick="viewAllSkills()" style="padding: 8px 16px; font-size: 0.75rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; color: #00f0ff; cursor: pointer;">&#x1F441; View</button>
+              <button class="add-skill-btn" onclick="addNewSkillCategory()" style="padding: 8px 16px; font-size: 0.75rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; color: #00f0ff; cursor: pointer;">+ Add Category</button>
+            </div>
+          </h3>
+          <div id="skillsViewContainer" style="display: none; margin-bottom: 15px;"></div>
+          <div id="skillsEditor">
+            <!-- Skills editor will be rendered by JavaScript -->
+          </div>
+          <button class="save-btn" onclick="saveAndRender()">&#x1F4BE; Save Skills</button>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div class="admin-section" id="admin-projects">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4C1; Projects
+            <div style="display: inline-flex; gap: 8px; float: right;">
+              <button class="view-btn" onclick="viewAllProjects()" style="padding: 5px 10px; font-size: 0.7rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px; color: #00f0ff; cursor: pointer;">&#x1F441; View</button>
+              <button class="add-skill-btn" onclick="addNewProject()" style="padding: 5px 10px; font-size: 0.7rem;">+ Add Project</button>
+            </div>
+          </h3>
+          <div id="projectsViewContainer" style="display: none; margin-bottom: 15px;"></div>
+          <div id="projectsEditor">
+            <!-- Projects editor will be rendered by JavaScript -->
+          </div>
+          <button class="save-btn" onclick="saveAndRender()">&#x1F4BE; Save Projects</button>
+        </div>
+      </div>
+
+      <!-- Experience Section -->
+      <div class="admin-section" id="admin-experience">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4C5; Experience
+            <div style="display: inline-flex; gap: 8px; float: right;">
+              <button class="view-btn" onclick="viewAllExperience()" style="padding: 5px 10px; font-size: 0.7rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px; color: #00f0ff; cursor: pointer;">&#x1F441; View</button>
+              <button class="add-skill-btn" onclick="addNewExperience()" style="padding: 5px 10px; font-size: 0.7rem;">+ Add Experience</button>
+            </div>
+          </h3>
+          <div id="experienceViewContainer" style="display: none; margin-bottom: 15px;"></div>
+          <div id="experienceEditor">
+            <!-- Experience editor will be rendered by JavaScript -->
+          </div>
+          <button class="save-btn" onclick="saveAndRender()">&#x1F4BE; Save Experience</button>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="admin-section" id="admin-contact">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4E7; Contact Section</h3>
+          <div class="edit-field">
+            <label>Contact Text</label>
+            <textarea class="edit-textarea" id="editContactText">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's create something amazing together.</textarea>
+          </div>
+          <button class="save-btn" onclick="saveContact()">&#x1F4BE; Save Contact</button>
+        </div>
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4DD; Social Links
+            <button class="view-btn" onclick="toggleSocialLogos()" style="float: right; padding: 5px 10px; font-size: 0.7rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px; color: #00f0ff; cursor: pointer;">&#x1F4F7; Logos</button>
+          </h3>
+          <div id="socialLogosContainer" style="display: none; margin-bottom: 20px; padding: 15px; background: var(--bg-card); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px;">
+            <h4 style="color: #00f0ff; margin-bottom: 15px; font-size: 0.9rem;">Custom Logos for Social Links</h4>
+            <div id="socialLogosList"></div>
+          </div>
+          <div class="edit-field">
+            <label>GitHub</label>
+            <input type="text" class="edit-input" id="editGithub" placeholder="https://github.com/username">
+          </div>
+          <div class="edit-field">
+            <label>LinkedIn</label>
+            <input type="text" class="edit-input" id="editLinkedin" placeholder="https://linkedin.com/in/username">
+          </div>
+          <div class="edit-field">
+            <label>Email</label>
+            <input type="text" class="edit-input" id="editEmail" placeholder="mailto:email@example.com">
+          </div>
+          <div class="edit-field">
+            <label>Twitter</label>
+            <input type="text" class="edit-input" id="editTwitter" placeholder="https://twitter.com/username">
+          </div>
+          <div class="edit-field">
+            <label>Instagram</label>
+            <input type="text" class="edit-input" id="editInstagram" placeholder="https://instagram.com/username">
+          </div>
+          <div class="edit-field">
+            <label>Facebook</label>
+            <input type="text" class="edit-input" id="editFacebook" placeholder="https://facebook.com/username">
+          </div>
+          <div class="edit-field">
+            <label>YouTube</label>
+            <input type="text" class="edit-input" id="editYoutube" placeholder="https://youtube.com/@username">
+          </div>
+          <div class="edit-field">
+            <label>Reddit</label>
+            <input type="text" class="edit-input" id="editReddit" placeholder="https://reddit.com/u/username">
+          </div>
+          <div class="edit-field">
+            <label>Stack Overflow</label>
+            <input type="text" class="edit-input" id="editStackoverflow" placeholder="https://stackoverflow.com/users/...">
+          </div>
+          <div class="edit-field">
+            <label>CodePen</label>
+            <input type="text" class="edit-input" id="editCodepen" placeholder="https://codepen.io/username">
+          </div>
+          <div class="edit-field">
+            <label>Dribbble</label>
+            <input type="text" class="edit-input" id="editDribbble" placeholder="https://dribbble.com/username">
+          </div>
+          <div class="edit-field">
+            <label>Behance</label>
+            <input type="text" class="edit-input" id="editBehance" placeholder="https://behance.net/username">
+          </div>
+          <button class="save-btn" onclick="saveSettings()">&#x1F4BE; Save Social Links</button>
+        </div>
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F512; Change Password</h3>
+          <div class="edit-field">
+            <label>Current Password</label>
+            <input type="password" class="edit-input" id="adminCurrentPass" placeholder="Enter current password">
+          </div>
+          <div class="edit-field">
+            <label>New Password</label>
+            <input type="password" class="edit-input" id="adminNewPass" placeholder="Enter new password">
+          </div>
+          <div class="edit-field">
+            <label>Confirm Password</label>
+            <input type="password" class="edit-input" id="adminConfirmPass" placeholder="Confirm new password">
+          </div>
+          <button class="save-btn" onclick="updateAdminPassword()">&#x1F511; Update Password</button>
+        </div>
+      </div>
+
+      <!-- Messages Section -->
+      <div class="admin-section" id="admin-messages">
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x1F4AC; Messages</h3>
+          <div class="messages-list" id="messagesContainer">
+            <!-- Messages will be rendered by JavaScript -->
+          </div>
+        </div>
+        <div class="edit-section">
+          <h3 class="edit-section-title">&#x26A0; Danger Zone</h3>
+          <button class="save-btn" style="background: linear-gradient(135deg, #ff0044, #ff0000);" onclick="clearAllData()">&#x1F5D1; Reset All Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <h2>&#x1F511; Admin Login</h2>
+      <input type="text" class="login-input" id="username" placeholder="Username (admin)">
+      <input type="password" class="login-input" id="password" placeholder="Password">
+      <button class="login-btn" onclick="attemptLogin()">Login</button>
+      <div class="login-error" id="loginError"></div>
+      <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+        <button class="home-btn" onclick="goToHome()">&#x1F3E0; Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lock Screen Overlay -->
+  <div class="admin-locked-overlay hidden" id="lockedOverlay">
+    <div class="lock-screen-box">
+      <h3>&#x1F512; Admin Locked</h3>
+      <p>Enter password to unlock</p>
+      <input type="password" class="login-input" id="unlockPassword" placeholder="Enter password">
+      <button class="unlock-btn" onclick="unlockAdmin()">&#x1F513; Unlock</button>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
