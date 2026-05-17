@@ -1,7 +1,7 @@
 // Default Data
 const defaultData = {
   hero: {
-    photo: '',
+    photo: 'https://raw.githubusercontent.com/EbraShaaN/Ebrasalman/main/Salman.png',
     logo: 'E',
     name: 'EBRA SALMAN',
     title: 'Software Engineer | Developer | Programmer',
@@ -987,83 +987,37 @@ function clearAllData() {
   }
 }
 
-// ─────────────────────────────────────────────────────────
-// CLOUD IMAGE UPLOAD — imgbb.com (free, no account needed)
-// Upload করলে permanent public HTTPS URL পাওয়া যায়
-// যা সব device / browser-এ দেখা যায়।
-// ─────────────────────────────────────────────────────────
-const IMGBB_KEY = 'a1b935ce4b64ef58eb3ac9d5b0e4e6e0';
-
-async function uploadToCloud(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error('File read failed'));
-    reader.onload = async (e) => {
-      try {
-        // Strip the data:...;base64, prefix
-        const base64 = e.target.result.split(',')[1];
-        const fd = new FormData();
-        fd.append('key', IMGBB_KEY);
-        fd.append('image', base64);
-
-        const res = await fetch('https://api.imgbb.com/1/upload', {
-          method: 'POST',
-          body: fd
-        });
-        const data = await res.json();
-        if (!data.success) throw new Error(data.error?.message || 'Upload failed');
-        resolve(data.data.url);   // permanent public URL
-      } catch (err) {
-        reject(err);
-      }
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ── Profile Photo ──────────────────────────
+// ─────────────────────────────────────────────────────
+// PROFILE PHOTO
+// GitHub-এ image রেখে raw URL paste করলে
+// সব device ও browser-এ দেখা যাবে।
+// ─────────────────────────────────────────────────────
 function handlePhotoUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
-
-  // Show uploading feedback
-  const btn = document.querySelector('.upload-btn');
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ Uploading…'; }
-  showToast('📤 Photo cloud-এ upload হচ্ছে… একটু অপেক্ষা করুন।');
-
-  uploadToCloud(file)
-    .then(url => {
-      siteData.hero.photo = url;
-      document.getElementById('editPhotoUrl').value = url;
-      showPhotoPreview(url);
-      localStorage.setItem('portfolioData', JSON.stringify(siteData));
-      renderContent();
-      showToast('✅ Photo upload সফল! সব device-এ দেখা যাবে।');
-    })
-    .catch(err => {
-      console.error(err);
-      // Fallback – read as base64 locally (only visible on this browser)
-      const reader = new FileReader();
-      reader.onload = e => {
-        siteData.hero.photo = e.target.result;
-        document.getElementById('editPhotoUrl').value = '(local only)';
-        showPhotoPreview(e.target.result);
-        localStorage.setItem('portfolioData', JSON.stringify(siteData));
-        showToast('⚠️ Cloud upload ব্যর্থ। Photo শুধু এই browser-এ দেখা যাবে।', 'error');
-      };
-      reader.readAsDataURL(file);
-    })
-    .finally(() => {
-      if (btn) { btn.disabled = false; btn.textContent = '📷 Upload Photo'; }
-      event.target.value = '';   // reset file input
-    });
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    siteData.hero.photo = e.target.result;
+    document.getElementById('editPhotoUrl').value = '';
+    showPhotoPreview(e.target.result);
+    localStorage.setItem('portfolioData', JSON.stringify(siteData));
+    renderContent();
+    showToast('⚠️ শুধু এই browser-এ দেখা যাবে। সব device-এ দেখাতে GitHub raw URL দিন।', 'error');
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
 }
 
 function updateProfilePhoto(url) {
-  if (url && (url.startsWith('http') || url.match(/\.(jpeg|jpg|gif|png|webp|svg)$/i))) {
-    siteData.hero.photo = url;
-    showPhotoPreview(url);
-  }
+  url = (url || '').trim();
+  if (!url) return;
+  // Regular GitHub URL → raw URL auto-convert
+  url = url
+    .replace('https://github.com/', 'https://raw.githubusercontent.com/')
+    .replace('/blob/', '/');
+  siteData.hero.photo = url;
+  showPhotoPreview(url);
+  showToast('✅ Photo URL set! Save Hero চাপুন।');
 }
 
 function showPhotoPreview(src) {
@@ -1175,33 +1129,18 @@ function renderSocialLogos() {
   `;
 }
 
-// ── Social Logo Upload ─────────────────────
 function uploadSocialLogo(siteKey, event) {
   const file = event.target.files[0];
   if (!file) return;
-
-  showToast('📤 Logo cloud-এ upload হচ্ছে…');
-
-  uploadToCloud(file)
-    .then(url => {
-      if (!siteData.socialLogos) siteData.socialLogos = {};
-      siteData.socialLogos[siteKey] = url;
-      renderSocialLogos();
-      showToast('✅ Logo upload সফল! সব device-এ দেখা যাবে।');
-    })
-    .catch(err => {
-      console.error(err);
-      // Fallback – base64
-      const reader = new FileReader();
-      reader.onload = e => {
-        if (!siteData.socialLogos) siteData.socialLogos = {};
-        siteData.socialLogos[siteKey] = e.target.result;
-        renderSocialLogos();
-        showToast('⚠️ Cloud upload ব্যর্থ। Logo শুধু এই browser-এ দেখা যাবে।', 'error');
-      };
-      reader.readAsDataURL(file);
-    })
-    .finally(() => { event.target.value = ''; });
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    if (!siteData.socialLogos) siteData.socialLogos = {};
+    siteData.socialLogos[siteKey] = e.target.result;
+    renderSocialLogos();
+    showToast('⚠️ Logo শুধু এই browser-এ দেখা যাবে। সব device-এ দেখাতে GitHub raw URL দিন।', 'error');
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
 }
 
 function removeSocialLogo(siteKey) {
