@@ -987,24 +987,71 @@ function clearAllData() {
   }
 }
 
+// ============================================================
+// IMAGE UPLOAD TO IMGBB (Public Online Hosting)
+// ============================================================
+// imgbb free API key - images are publicly accessible by anyone
+const IMGBB_API_KEY = '3a9d29e82af24a65095a5daae3c87de2';
+
+async function uploadToImgbb(base64Data) {
+  // Strip the data:image/...;base64, prefix if present
+  const base64 = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
+
+  const formData = new FormData();
+  formData.append('key', IMGBB_API_KEY);
+  formData.append('image', base64);
+
+  const response = await fetch('https://api.imgbb.com/1/upload', {
+    method: 'POST',
+    body: formData
+  });
+
+  if (!response.ok) throw new Error('Upload failed: ' + response.status);
+  const data = await response.json();
+  if (!data.success) throw new Error('imgbb error: ' + (data.error && data.error.message));
+  return data.data.url; // permanent public URL
+}
+
 // Profile Photo Functions
 function handlePhotoUpload(event) {
   const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const base64Image = e.target.result;
-      siteData.hero.photo = base64Image;
-      document.getElementById('editPhotoUrl').value = base64Image.substring(0, 50) + '...';
-      showPhotoPreview(base64Image);
+  if (!file) return;
+
+  // Show uploading state
+  const uploadBtn = document.querySelector('[onclick="document.getElementById(\'photoUpload\').click()"]');
+  if (uploadBtn) { uploadBtn.disabled = true; uploadBtn.textContent = '⏳ Uploading...'; }
+  showToast('Uploading photo to cloud... please wait.', 'success');
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const publicUrl = await uploadToImgbb(e.target.result);
+      siteData.hero.photo = publicUrl;
+      document.getElementById('editPhotoUrl').value = publicUrl;
+      showPhotoPreview(publicUrl);
       localStorage.setItem('portfolioData', JSON.stringify(siteData));
-    };
-    reader.readAsDataURL(file);
-  }
+      renderContent();
+      showToast('✅ Photo uploaded! Now visible to everyone online.');
+    } catch (err) {
+      console.error(err);
+      // Fallback: store base64 locally with a warning
+      siteData.hero.photo = e.target.result;
+      document.getElementById('editPhotoUrl').value = '(local - only visible on this device)';
+      showPhotoPreview(e.target.result);
+      localStorage.setItem('portfolioData', JSON.stringify(siteData));
+      showToast('⚠️ Cloud upload failed. Photo saved locally only.', 'error');
+    } finally {
+      if (uploadBtn) { uploadBtn.disabled = false; uploadBtn.textContent = '📷 Upload Photo'; }
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 function updateProfilePhoto(url) {
-  if (url.startsWith('data:image') || url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+  if (url && url.match(/^https?:\/\//i)) {
+    siteData.hero.photo = url;
+    showPhotoPreview(url);
+  } else if (url.startsWith('data:image') || url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
     siteData.hero.photo = url;
     showPhotoPreview(url);
   }
@@ -1121,17 +1168,28 @@ function renderSocialLogos() {
 
 function uploadSocialLogo(siteKey, event) {
   const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const base64Image = e.target.result;
+  if (!file) return;
+
+  showToast('Uploading logo to cloud... please wait.', 'success');
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const publicUrl = await uploadToImgbb(e.target.result);
       if (!siteData.socialLogos) siteData.socialLogos = {};
-      siteData.socialLogos[siteKey] = base64Image;
+      siteData.socialLogos[siteKey] = publicUrl;
       renderSocialLogos();
-      showToast('Logo uploaded! Click Save Logos to apply.');
-    };
-    reader.readAsDataURL(file);
-  }
+      showToast('✅ Logo uploaded! Now visible to everyone online.');
+    } catch (err) {
+      console.error(err);
+      // Fallback: store base64 locally
+      if (!siteData.socialLogos) siteData.socialLogos = {};
+      siteData.socialLogos[siteKey] = e.target.result;
+      renderSocialLogos();
+      showToast('⚠️ Cloud upload failed. Logo saved locally only.', 'error');
+    }
+  };
+  reader.readAsDataURL(file);
 }
 
 function removeSocialLogo(siteKey) {

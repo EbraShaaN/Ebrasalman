@@ -53,7 +53,6 @@
   <nav>
     <div class="logo-container">
       <div class="logo-img" id="navLogo">
-	  <img src="Salman.png" alt="Salman">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
         </svg>
@@ -264,11 +263,14 @@
         <div class="edit-section">
           <h3 class="edit-section-title">&#x1F464; Hero Section</h3>
           <div class="edit-field">
-            <label>Profile Photo URL</label>
+            <label>Profile Photo</label>
+            <div style="margin-bottom: 10px; padding: 10px 14px; background: rgba(0, 240, 255, 0.07); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 10px; font-size: 0.8rem; display: flex; align-items: center; gap: 8px;">
+              &#x2601;&#xFE0F; <span style="color: var(--text-secondary);">Photo upload করলে <strong style="color:#00f0ff;">online cloud-এ</strong> save হবে — সব device ও browser-এ দেখা যাবে।</span>
+            </div>
             <div class="photo-upload-container">
-              <input type="text" class="edit-input" id="editPhotoUrl" placeholder="Enter image URL or upload">
+              <input type="text" class="edit-input" id="editPhotoUrl" placeholder="Image URL paste করুন অথবা নিচে upload করুন" onchange="updateProfilePhoto(this.value)">
               <input type="file" id="photoUpload" accept="image/*" onchange="handlePhotoUpload(event)" style="display: none;">
-              <button class="upload-btn" onclick="document.getElementById('photoUpload').click()">&#x1F4F7; Upload</button>
+              <button class="upload-btn" onclick="document.getElementById('photoUpload').click()">&#x1F4F7; Upload Photo</button>
             </div>
             <div class="photo-preview" id="photoPreview" style="display: none;">
               <img id="photoPreviewImg" src="" alt="Preview">
@@ -394,7 +396,10 @@
             <button class="view-btn" onclick="toggleSocialLogos()" style="float: right; padding: 5px 10px; font-size: 0.7rem; background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px; color: #00f0ff; cursor: pointer;">&#x1F4F7; Logos</button>
           </h3>
           <div id="socialLogosContainer" style="display: none; margin-bottom: 20px; padding: 15px; background: var(--bg-card); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px;">
-            <h4 style="color: #00f0ff; margin-bottom: 15px; font-size: 0.9rem;">Custom Logos for Social Links</h4>
+            <h4 style="color: #00f0ff; margin-bottom: 8px; font-size: 0.9rem;">Custom Logos for Social Links</h4>
+            <div style="margin-bottom: 12px; padding: 8px 12px; background: rgba(0, 240, 255, 0.07); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 8px; font-size: 0.78rem; color: var(--text-secondary);">
+              &#x2601;&#xFE0F; Logo upload করলে <strong style="color:#00f0ff;">online cloud-এ</strong> save হবে — সব device-এ দেখা যাবে।
+            </div>
             <div id="socialLogosList"></div>
           </div>
           <div class="edit-field">
